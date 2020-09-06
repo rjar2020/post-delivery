@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+#Start infraestructure
+ docker-compose -f ./docker/docker-compose.yml up --detach
+
+ #Install dependencies
+ go get gopkg.in/confluentinc/confluent-kafka-go.v1/kafka
+ go get -u github.com/magiconair/properties
+ 
