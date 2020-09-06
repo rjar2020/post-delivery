@@ -1,8 +1,8 @@
 # post-delivey system
 
 ## Prerequisites (besides Git, of course)
-Docker Desktop or any Docker compatible app/manager
-Go Tools
+- Docker Desktop or any Docker compatible app/manager
+- Go Tools
 
 ## Running the app
 
