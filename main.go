@@ -2,8 +2,10 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"sync"
 
+	"github.com/rjar2020/post-delivery/controller"
 	"github.com/rjar2020/post-delivery/env"
 
 	"github.com/rjar2020/post-delivery/consumers"
@@ -13,11 +15,13 @@ import (
 func main() {
 	log.Printf("####### Strating post delivery application #######")
 	env.LoadEnv()
+	controller.RegisterControllers()
 	var wg sync.WaitGroup
 	wg.Add(1)
 	topic := "test-topic"
 	producers.Produce("Hello world before consuming", topic)
 	go consumers.StartConsumer(topic, "postback-processor", &wg)
 	producers.Produce("Hello world after starting consumer", topic)
+	http.ListenAndServe(":4000", nil)
 	wg.Wait()
 }
