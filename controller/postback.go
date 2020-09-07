@@ -60,13 +60,3 @@ func (pc postbackController) parseRequest(r *http.Request) (model.Postback, erro
 	}
 	return pb, nil
 }
-
-func parseTokenMap(tokens string) map[string]string {
-	log.Printf("Tokens %#v", tokens)
-	return map[string]string{
-		"rsc": "3711",
-		"r":   "2138",
-		"gri": "1908",
-		"adg": "912",
-	}
-}
