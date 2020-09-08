@@ -6,7 +6,11 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
+
+	"github.com/rjar2020/post-delivery/env"
+	"github.com/rjar2020/post-delivery/producers"
 
 	"github.com/rjar2020/post-delivery/model"
 )
@@ -29,6 +33,8 @@ func (pc postbackController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			log.Printf("Request: %#v", pb)
+			jsonData, err := json.Marshal(pb)
+			producers.Produce(string(jsonData), os.Getenv(env.KafkaPostBackTopic))
 			w.WriteHeader(http.StatusCreated)
 		default:
 			w.WriteHeader(http.StatusNotImplemented)

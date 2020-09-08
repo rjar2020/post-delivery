@@ -1,12 +1,14 @@
 package consumers
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 	"sync"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/rjar2020/post-delivery/env"
+	"github.com/rjar2020/post-delivery/model"
 )
 
 //StartConsumer initializes and runs a kafka consumer
@@ -39,6 +41,12 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 			case *kafka.Message:
 				log.Printf("Message on %s: %s",
 					e.TopicPartition, string(e.Value))
+				postBack, err := parseMessage(e.Value)
+				if err != nil {
+					log.Printf("Error decoding kafka message: %s", err)
+				} else {
+					log.Printf("Decoded message on %s: %#v", e.TopicPartition, postBack)
+				}
 			case kafka.PartitionEOF:
 				log.Printf("Reached %v", e)
 			case kafka.Error:
@@ -51,4 +59,13 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 		log.Printf("Error subscribing to topics: %v", topic)
 	}
 	return err
+}
+
+func parseMessage(payload []byte) (model.Postback, error) {
+	var postBack model.Postback
+	err := json.Unmarshal(payload, &postBack)
+	if err != nil {
+		log.Printf("Error decoding kafka message: %s", err)
+	}
+	return postBack, err
 }
