@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"sync"
 
 	"github.com/rjar2020/post-delivery/controller"
@@ -12,16 +13,28 @@ import (
 	"github.com/rjar2020/post-delivery/producers"
 )
 
+const example = `{
+	"endpoint":{
+	"method":"GET", 
+	"url":"http://sample_domain_endpoint.com/data?icon={mascot}&image={coordinates}&foo={bar}"
+	}, 
+	"data":[
+	{
+	"icon":"Gopher", "coordinates":"https://blog.golang.org/gopher/gopher.png"
+	} ]
+	}`
+
 func main() {
 	log.Printf("####### Strating post delivery application #######")
 	env.LoadEnv()
 	controller.RegisterControllers()
 	var wg sync.WaitGroup
 	wg.Add(1)
-	topic := "test-topic"
-	producers.Produce("Hello world before consuming", topic)
+	httpPort := ":" + os.Getenv(env.APIPort)
+	topic := os.Getenv(env.KafkaPostBackTopic)
+	producers.Produce(example, topic)
 	go consumers.StartConsumer(topic, "postback-processor", &wg)
-	producers.Produce("Hello world after starting consumer", topic)
-	http.ListenAndServe(":4000", nil)
+	producers.Produce(example, topic)
+	http.ListenAndServe(httpPort, nil)
 	wg.Wait()
 }
