@@ -59,11 +59,11 @@ Please request collaborator access if you want to work with it.
 ## Notes
 
 ### to-do
-1- Kafka installation in Ubuntu image
-2- Complete business logic
-3- PHP ingester to hit POST /postback endpoint
-4- Observability
-5- Kafka config improvements for HA
+- Kafka installation in Ubuntu image
+- Complete business logic
+- PHP ingester to hit POST /postback endpoint
+- Observability
+- Kafka config improvements for HA
 
 ### Log
 - PHP and kafka integration existing projects/plugins usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
