@@ -16,7 +16,7 @@ import (
 const example = `{
 	"endpoint":{
 	"method":"GET", 
-	"url":"http://sample_domain_endpoint.com/data?icon={mascot}&image={coordinates}&foo={bar}"
+	"url":"http://sample_domain_endpoint.com/data?tittle={icon}&image={coordinates}&foo={bar}"
 	}, 
 	"data":[
 	{

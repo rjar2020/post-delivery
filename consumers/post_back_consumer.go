@@ -6,6 +6,8 @@ import (
 	"os"
 	"sync"
 
+	"github.com/rjar2020/post-delivery/service"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/rjar2020/post-delivery/env"
 	"github.com/rjar2020/post-delivery/model"
@@ -46,6 +48,7 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 					log.Printf("Error decoding kafka message: %s", err)
 				} else {
 					log.Printf("Decoded message on %s: %#v", e.TopicPartition, postBack)
+					service.ToURI(postBack)
 				}
 			case kafka.PartitionEOF:
 				log.Printf("Reached %v", e)
