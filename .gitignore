@@ -93,4 +93,5 @@ gradle-app.setting
 #Golang
 go.sum
 post-delivery
-
+resources/my_Cert.crt
+resources/rootcaCert.crt
