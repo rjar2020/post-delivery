@@ -12,11 +12,6 @@ RUN apt-get -y install \
     curl \
     gnupg-agent \
     software-properties-common
-RUN curl --insecure https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-RUN apt-get update
-RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal test"
-RUN curl -L "https://github.com/docker/compose/releases/download/1.27.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
 RUN apt-get -y install vim
 RUN apt-get -y install gcc
 RUN cd /home/rjar \ 
@@ -24,4 +19,9 @@ RUN cd /home/rjar \
     && tar -xvf go1.13.5.linux-amd64.tar.gz \ 
     && mv go /usr/local
 RUN mv /home/rjar/resources/.profile ~/.profile
+RUN apt-get -y install default-jre
+RUN mkdir /home/rjar/kafka \
+    && cd /home/rjar/kafka \
+    && curl "https://downloads.apache.org/kafka/2.6.0/kafka_2.12-2.6.0.tgz" -o ./kafka.tgz \
+    && tar -xvzf kafka.tgz
 CMD ["ubuntu:20.10"]
