@@ -63,6 +63,7 @@ docker push rjar2020/postback-delivery:latest
 - PHP ingester to hit POST /postback endpoint
 - Observability
 - Kafka config improvements for HA
+- Github CI to build and push image to Dockerhub
 
 ### Log
 - PHP and kafka integration existing projects/plugins usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
