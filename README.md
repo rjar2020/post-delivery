@@ -42,24 +42,23 @@ When the image is built, you can work there:
 ```bash
 #Entering the image
 docker run -it --entrypoint bash postback-delivery
-#One manual step for finish go config
-source ~/.profile
-#Verifying Go install is healthy
-go version
-#Going to the app repo
-cd /home/rjar
-#Starting the app
-go run github.com/rjar2020/post-delivery
+#Start the app
+./home/rjar/start-postback-in-image
 ```
 Use ***Control + c*** to stop the app
 
 The image is available in https://hub.docker.com/repository/docker/rjar2020/postback-delivery
 Please request collaborator access if you want to work with it.
 
+For collaborators/mantainers, to publish the latest version of the image:
+```bash
+docker tag postback-delivery:latest rjar2020/postback-delivery:latest
+docker push rjar2020/postback-delivery:latest
+```
+
 ## Notes
 
 ### to-do
-- Kafka installation in Ubuntu image
 - Complete business logic
 - PHP ingester to hit POST /postback endpoint
 - Observability
