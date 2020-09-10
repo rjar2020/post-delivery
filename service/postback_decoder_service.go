@@ -9,8 +9,8 @@ import (
 	"github.com/rjar2020/post-delivery/model"
 )
 
-//ToURI takes the endpoint and replace Data key tokens in it by Data values
-func ToURI(postback model.Postback) string {
+//ToURL takes the endpoint and replace Data key tokens in it by Data values
+func ToURL(postback model.Postback) string {
 	urlTemplate := postback.Endpoint.URL
 	for _, tokenValueMap := range postback.Data {
 		for k, v := range tokenValueMap {

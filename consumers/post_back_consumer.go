@@ -48,7 +48,8 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 					log.Printf("Error decoding kafka message: %s", err)
 				} else {
 					log.Printf("Decoded message on %s: %#v", e.TopicPartition, postBack)
-					service.ToURI(postBack)
+					url := service.ToURL(postBack)
+					service.DeliverPostback(postBack.Endpoint.Method, url)
 				}
 			case kafka.PartitionEOF:
 				log.Printf("Reached %v", e)
