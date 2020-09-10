@@ -67,8 +67,9 @@ docker push rjar2020/postback-delivery:latest
 
 ### to-do
 - PHP ingester to hit POST /postback endpoint
+- Dead letter queue and retry mechanism for postback failed to process.
 - Observability
-- Kafka config improvements for HA
+- Kafka config improvements for HA, and start many instance of the app to make the most of it.
 - Github CI to run the tests, build and push image to Dockerhub
 
 ### Log
