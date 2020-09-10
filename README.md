@@ -5,7 +5,7 @@
 - Go Tools
 
 ## Testing
-From your CI or the console use for executing the unit tests:
+From your CI or the console use for executing the developer tests:
 
 ```bash
 go test github.com/rjar2020/post-delivery/tests
