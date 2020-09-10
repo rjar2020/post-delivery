@@ -20,7 +20,9 @@ func ToURL(postback model.Postback) string {
 			log.Printf("Key: %v - Value: %v", k, v)
 		}
 	}
-	re := regexp.MustCompile(`{.*}`)
+	re := regexp.MustCompile(`={\w*}&`)
+	urlTemplate = re.ReplaceAllString(urlTemplate, "=&")
+	re = regexp.MustCompile(`{.*}`)
 	urlTemplate = re.ReplaceAllString(urlTemplate, "")
 	log.Printf("Decoded URL: %#v", urlTemplate)
 	return urlTemplate

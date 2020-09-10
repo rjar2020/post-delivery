@@ -9,7 +9,6 @@ import (
 
 //DeliverPostback is accessing the URL using the specified HTTP method
 func DeliverPostback(httpMethod string, URL string) (string, error) {
-	var response string
 	var err error
 	var resp *http.Response
 
@@ -19,23 +18,20 @@ func DeliverPostback(httpMethod string, URL string) (string, error) {
 	case "POST":
 		resp, err = http.Post(URL, "application/json", nil)
 	default:
-		response = "Invalid HTTP method: " + httpMethod
-		err = fmt.Errorf(response)
-		return response, err
+		err = fmt.Errorf("Invalid HTTP method: " + httpMethod)
+		return "", err
 	}
 
 	if err != nil {
-		response = "Error accessing the URL: %v"
-		log.Printf(response, URL, err)
-		return response, err
+		log.Printf("Error accessing the URL %v : %v", URL, err)
+		return "", err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		response = "Error decoding the response for URL %v: "
-		log.Printf(response, URL, err)
-		return response, err
+		log.Printf("Error decoding the response for URL %v : %v", URL, err)
+		return "", err
 	}
 
 	log.Printf("Respose from %v with method %v: %v", URL, httpMethod, body)
