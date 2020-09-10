@@ -38,6 +38,6 @@ func DeliverPostback(httpMethod string, URL string) (string, error) {
 		return response, err
 	}
 
-	log.Printf("Respose from %v: %v", URL, body)
+	log.Printf("Respose from %v with method %v: %v", URL, httpMethod, body)
 	return string(body), err
 }
