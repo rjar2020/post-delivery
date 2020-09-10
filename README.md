@@ -4,6 +4,13 @@
 - Docker Desktop or any Docker compatible app/manager
 - Go Tools
 
+## Testing
+From your CI or the console use for executing the unit tests:
+
+```bash
+go test github.com/rjar2020/post-delivery/tests
+```
+
 ## Running the app
 
 ### Local / Dev env
@@ -59,11 +66,10 @@ docker push rjar2020/postback-delivery:latest
 ## Notes
 
 ### to-do
-- Complete business logic
 - PHP ingester to hit POST /postback endpoint
 - Observability
 - Kafka config improvements for HA
-- Github CI to build and push image to Dockerhub
+- Github CI to run the tests, build and push image to Dockerhub
 
 ### Log
 - PHP and kafka integration existing projects/plugins usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
