@@ -10,7 +10,7 @@ import (
 	"regexp"
 
 	"github.com/rjar2020/post-delivery/env"
-	"github.com/rjar2020/post-delivery/producers"
+	"github.com/rjar2020/post-delivery/producer"
 
 	"github.com/rjar2020/post-delivery/model"
 )
@@ -34,7 +34,7 @@ func (pc postbackController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 			log.Printf("Request: %#v", pb)
 			jsonData, err := json.Marshal(pb)
-			producers.Produce(string(jsonData), os.Getenv(env.KafkaPostBackTopic))
+			producer.Produce(string(jsonData), os.Getenv(env.KafkaPostBackTopic))
 			w.WriteHeader(http.StatusCreated)
 		default:
 			w.WriteHeader(http.StatusNotImplemented)
@@ -50,7 +50,7 @@ func newPostbackController() *postbackController {
 	}
 }
 
-func (pc postbackController) parseRequest(r *http.Request) (model.Postback, error) {
+func (pc postbackController) parseRequest(r *http.Request) (model.PostBack, error) {
 	buf, bodyErr := ioutil.ReadAll(r.Body)
 	if bodyErr != nil {
 		log.Print("bodyErr ", bodyErr.Error())
@@ -58,11 +58,11 @@ func (pc postbackController) parseRequest(r *http.Request) (model.Postback, erro
 	rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
 	log.Printf("BODY: %q", rdr1)
 	dec := json.NewDecoder(rdr1)
-	var pb model.Postback
+	var pb model.PostBack
 	err := dec.Decode(&pb)
 	if err != nil {
 		log.Printf("Could not parse postback object %#v", err)
-		return model.Postback{}, err
+		return model.PostBack{}, err
 	}
 	return pb, nil
 }

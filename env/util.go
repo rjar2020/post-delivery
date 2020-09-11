@@ -18,6 +18,8 @@ const (
 	APIPort = "API_PORT"
 	//KafkaPostBackTopic is the topic where the postback messages are delivered
 	KafkaPostBackTopic = "KAFKA_POSTBACK_TOPIC"
+	//KafkaDeadPostBackTopic is the topic where the postback messages that were not delivered are sent
+	KafkaDeadPostBackTopic = "KAFKA_DEAD_POSTBACK_TOPIC"
 )
 
 //LoadEnv retrieve environment variables
@@ -29,4 +31,5 @@ func LoadEnv() {
 	os.Setenv(KafkaProducersAck, p.MustGetString(KafkaProducersAck))
 	os.Setenv(APIPort, p.MustGetString(APIPort))
 	os.Setenv(KafkaPostBackTopic, p.MustGetString(KafkaPostBackTopic))
+	os.Setenv(KafkaDeadPostBackTopic, p.MustGetString(KafkaDeadPostBackTopic))
 }
