@@ -5,11 +5,21 @@ import (
 	"os"
 	"sync"
 
+	"github.com/rjar2020/post-delivery/producers"
+
 	"github.com/rjar2020/post-delivery/model"
 	"github.com/rjar2020/post-delivery/service"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/rjar2020/post-delivery/env"
+)
+
+//I know this is not needed, I just wanted to try iota
+const (
+	//OneSecond for kafka consumer polling
+	OneSecond = (iota + 1) * 1000
+	//TwoSeconds for kafka consumer polling
+	TwoSeconds = (iota + 1) * 1000
 )
 
 //StartConsumer initializes and runs a kafka consumer
@@ -37,19 +47,12 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 	err := consumer.SubscribeTopics([]string{topic}, nil)
 	if err == nil {
 		for true {
-			ev := consumer.Poll(2000)
+			ev := consumer.Poll(TwoSeconds)
 			switch e := ev.(type) {
 			case *kafka.Message:
 				log.Printf("Message on %s: %s",
 					e.TopicPartition, string(e.Value))
-				postBack, err := model.FromJSONtoPostback(e.Value)
-				if err != nil {
-					log.Printf("Error decoding kafka message: %s", err)
-				} else {
-					log.Printf("Decoded message on %s: %#v", e.TopicPartition, postBack)
-					url := service.ToURL(postBack)
-					service.DeliverPostback(postBack.Endpoint.Method, url)
-				}
+				processPostBack(e)
 			case kafka.PartitionEOF:
 				log.Printf("Reached %v", e)
 			case kafka.Error:
@@ -62,4 +65,19 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 		log.Printf("Error subscribing to topics: %v", topic)
 	}
 	return err
+}
+
+func processPostBack(message *kafka.Message) {
+	postBack, err := model.FromJSONtoPostback(message.Value)
+	if err != nil {
+		log.Printf("Error decoding kafka message: %s", err)
+	} else {
+		log.Printf("Decoded message on %s: %#v", message.TopicPartition, postBack)
+		url := service.ToURL(postBack)
+		_, err = service.DeliverPostback(postBack.Endpoint.Method, url)
+		if err != nil {
+			log.Printf("Error when processing postback. Sending it to dead letter topic: %v", err)
+			producers.Produce(string(message.Value), os.Getenv(env.KafkaDeadPostBackTopic))
+		}
+	}
 }
