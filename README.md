@@ -99,3 +99,5 @@ docker push rjar2020/postback-delivery:latest
 - Despite I really rely on TDD to orient my design and improve speed of development, when experimenting a new tools ecosystem, I had lean to implement first. So, much likely a huge refactor it's gonna be needed in the after-match.
 - I couldn't make docker-compose work in the ubuntu image, something is going on with Python, so I decided to install plain kafka infra.
 - Certs and docker images are always fun!
+
+[postman/delivery-postback.postman_collection.json]: https://github.com/rjar2020/post-delivery/blob/master/postman/delivery-postback.postman_collection.json
