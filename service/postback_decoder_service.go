@@ -10,7 +10,7 @@ import (
 )
 
 //ToURL takes the endpoint and replace Data key tokens in it by Data values
-func ToURL(postback model.Postback) string {
+func ToURL(postback model.PostBack) string {
 	urlTemplate := postback.Endpoint.URL
 	for _, tokenValueMap := range postback.Data {
 		for k, v := range tokenValueMap {

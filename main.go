@@ -6,11 +6,10 @@ import (
 	"os"
 	"sync"
 
+	"github.com/rjar2020/post-delivery/consumer"
 	"github.com/rjar2020/post-delivery/controller"
 	"github.com/rjar2020/post-delivery/env"
-
-	"github.com/rjar2020/post-delivery/consumers"
-	"github.com/rjar2020/post-delivery/producers"
+	"github.com/rjar2020/post-delivery/producer"
 )
 
 const example = `{
@@ -32,9 +31,9 @@ func main() {
 	wg.Add(1)
 	httpPort := ":" + os.Getenv(env.APIPort)
 	topic := os.Getenv(env.KafkaPostBackTopic)
-	producers.Produce(example, topic)
-	go consumers.StartConsumer(topic, "postback-processor", &wg)
-	producers.Produce(example, topic)
+	producer.Produce(example, topic)
+	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
+	producer.Produce(example, topic)
 	http.ListenAndServe(httpPort, nil)
 	wg.Wait()
 }

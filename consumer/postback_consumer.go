@@ -1,11 +1,11 @@
-package consumers
+package consumer
 
 import (
 	"log"
 	"os"
 	"sync"
 
-	"github.com/rjar2020/post-delivery/producers"
+	"github.com/rjar2020/post-delivery/producer"
 
 	"github.com/rjar2020/post-delivery/model"
 	"github.com/rjar2020/post-delivery/service"
@@ -22,8 +22,8 @@ const (
 	TwoSeconds = (iota + 1) * 1000
 )
 
-//StartConsumer initializes and runs a kafka consumer
-func StartConsumer(topic string, groupID string, wg *sync.WaitGroup) error {
+//StartPostBackConsumer initializes and runs a kafka consumer
+func StartPostBackConsumer(topic string, groupID string, wg *sync.WaitGroup) error {
 	consumer, err := createConsumer(groupID)
 	if err != nil {
 		log.Printf("Error initializaing consumer for topic %s - Group Id: %s", topic, groupID)
@@ -77,7 +77,7 @@ func processPostBack(message *kafka.Message) {
 		_, err = service.DeliverPostback(postBack.Endpoint.Method, url)
 		if err != nil {
 			log.Printf("Error when processing postback. Sending it to dead letter topic: %v", err)
-			producers.Produce(string(message.Value), os.Getenv(env.KafkaDeadPostBackTopic))
+			producer.Produce(string(message.Value), os.Getenv(env.KafkaDeadPostBackTopic))
 		}
 	}
 }
