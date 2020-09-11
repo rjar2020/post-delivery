@@ -24,4 +24,7 @@ RUN mkdir /home/rjar/kafka \
     && cd /home/rjar/kafka \
     && curl "https://downloads.apache.org/kafka/2.6.0/kafka_2.12-2.6.0.tgz" -o ./kafka.tgz \
     && tar -xvzf kafka.tgz
-CMD ["ubuntu:20.10"]
+RUN export GOPATH=$HOME/work
+RUN export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+EXPOSE 4000
+CMD ./home/rjar/start-postback-in-image.sh

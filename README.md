@@ -27,7 +27,7 @@ Including: topics, messages, consumer groups, etc.
 ```bash
 go run github.com/rjar2020/post-delivery
 ```
-Once you are here, POST /postback endpoint can be used to produce messages to kafka (see postman/delivery-postback.postman_collection.json)
+Once you are here, POST /postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
 
 Use ***Control + c*** to stop the app
 
@@ -47,12 +47,33 @@ docker build -t postback-delivery .
 When the image is built, you can work there:
 
 ```bash
-#Entering the image
+#Running a container of postback-delivery for working on it
 docker run -it --entrypoint bash postback-delivery
 #Start the app
 ./home/rjar/start-postback-in-image
 ```
-Use ***Control + c*** to stop the app
+Use ***Control + c*** to stop the app and exit to leave the container
+
+Or you can run a postback-delivery based container to use it from your host:
+
+```bash
+#To see the output of the app (Preferred for troubleshooting and also demo)
+docker run -p 4000:4000 postback-delivery
+#In background mode
+docker run -d -p 4000:4000 postback-delivery
+```
+
+Once you are here, POST localhost:4000/postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
+
+Other useful commands:
+```bash
+#Finding the id of the postback-delivery based container 
+docker ps
+#Pause the container
+docker pause <container_id>
+#Resume the container
+docker unpause <container_id>
+```
 
 The image is available in https://hub.docker.com/repository/docker/rjar2020/postback-delivery
 Please request collaborator access if you want to work with it.
@@ -72,7 +93,7 @@ docker push rjar2020/postback-delivery:latest
 - Github CI to run the tests, build and push image to Dockerhub
 
 ### Log
-- In PROD, postback endpoint and postback consumer should live in separate containers.
+- In PROD, postback endpoint and postback consumer should live in separate containers. Also kafka should have its own cluster (proper backups if needed, etc)
 - PHP and kafka integration existing projects/modules usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
 - Also PHP tools are messy, but maybe this is just a personal opinion comming from someone trying Go tools (I really like this self-contained ecosystem) and relying on the JVM ecosystem most of the time (Yes, variety, not self-contained like Golang but with clear conventions to follow)
 - Despite I really rely on TDD to orient my design and improve speed of development, when experimenting a new tools ecosystem, I had lean to implement first. So, much likely a huge refactor it's gonna be needed in the after-match.
