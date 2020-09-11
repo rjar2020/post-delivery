@@ -73,8 +73,9 @@ docker push rjar2020/postback-delivery:latest
 - Github CI to run the tests, build and push image to Dockerhub
 
 ### Log
-- PHP and kafka integration existing projects/plugins usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
-- Also PHP tools are messy, but maybe this is just a personal opinion comming for someone trying Go tools (I really like this ecosystem) and relying on the JVM ecosystem most of the time (Yes, variety, not self-contained like Golang but with clear conventions to follow)
-- Despite I really rely on TDD to orient my design and improve speed of development, when experimenting a new tools ecosystem, I have lean to implement first. So, much likely a huge refactor it's gonna be needed in the after-match.
+- In PROD, postback endpoint and postback consumer should live in separate containers.
+- PHP and kafka integration existing projects/modules usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
+- Also PHP tools are messy, but maybe this is just a personal opinion comming from someone trying Go tools (I really like this self-contained ecosystem) and relying on the JVM ecosystem most of the time (Yes, variety, not self-contained like Golang but with clear conventions to follow)
+- Despite I really rely on TDD to orient my design and improve speed of development, when experimenting a new tools ecosystem, I had lean to implement first. So, much likely a huge refactor it's gonna be needed in the after-match.
 - I couldn't make docker-compose work in the ubuntu image, something is going on with Python, so I decided to install plain kafka infra.
 - Certs and docker images are always fun!
