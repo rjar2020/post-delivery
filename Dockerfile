@@ -26,5 +26,20 @@ RUN mkdir /home/rjar/kafka \
     && tar -xvzf kafka.tgz
 RUN export GOPATH=$HOME/work
 RUN export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN export DEBCONF_NONINTERACTIVE_SEEN=true
+## preesed tzdata
+RUN echo "tzdata tzdata/Areas select Europe" > /tmp/preseed.txt; \
+    echo "tzdata tzdata/Zones/Europe select Madrid" >> /tmp/preseed.txt; \
+    debconf-set-selections /tmp/preseed.txt && \
+    apt-get update && \
+    apt-get install -y tzdata
+RUN apt -y install apache2
+RUN apt -qq -y install php libapache2-mod-php
+RUN mv -f /home/rjar/web/ports.conf /etc/apache2/ports.conf
+RUN mv -f /home/rjar/web/apache2.conf /etc/apache2/apache2.conf
+RUN mv -f /home/rjar/web/php/* /var/www/html
+RUN mv /var/www/html/index.html /var/www/html/index.html.bck
 EXPOSE 4000
+EXPOSE 8080
 CMD ./home/rjar/start-postback-in-image.sh

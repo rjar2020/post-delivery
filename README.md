@@ -48,7 +48,7 @@ When the image is built, you can work there:
 
 ```bash
 #Running a container of postback-delivery for working on it
-docker run -it --entrypoint bash postback-delivery
+docker run -it -p 4000:4000 -p 8080:8080 --entrypoint bash postback-delivery
 #Start the app
 ./home/rjar/start-postback-in-image
 ```
@@ -58,9 +58,9 @@ Or you can run a postback-delivery based container to use it from your host:
 
 ```bash
 #To see the output of the app (Preferred for troubleshooting and also demo)
-docker run -p 4000:4000 postback-delivery
+docker run -p 4000:4000 -p 8080:8080 postback-delivery
 #In background mode
-docker run -d -p 4000:4000 postback-delivery
+docker run -d -p 4000:4000 -p 8080:8080 postback-delivery
 ```
 
 Once you are here, POST localhost:4000/postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
