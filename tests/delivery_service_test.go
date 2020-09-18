@@ -35,7 +35,7 @@ func TestDeliverPostbackWhenNonExistentSite(t *testing.T) {
 
 func TestDeliverPostbackPOSTHappyPath(t *testing.T) {
 	response, err := service.DeliverPostback("POST", "https://www.google.com")
-	if err != nil {
+	if err = nil {
 		t.Errorf("Error delivering postback. Method: POST - Error: %v", err)
 	} else {
 		t.Log(response)
