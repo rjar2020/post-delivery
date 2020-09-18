@@ -4,6 +4,9 @@
 - Docker Desktop or any Docker compatible app/manager
 - Go Tools
 
+## CI
+If the build/test of your PR fails you wont be able to merge your changes.
+
 ## Testing
 From your CI or the console use for executing the developer tests:
 
