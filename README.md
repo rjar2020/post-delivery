@@ -64,6 +64,7 @@ docker run -d -p 4000:4000 -p 8080:8080 postback-delivery
 ```
 
 Once you are here, POST localhost:4000/postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
+Also PHP Ingester form will be available in localhost:8080
 
 Other useful commands:
 ```bash
