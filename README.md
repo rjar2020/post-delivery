@@ -95,7 +95,7 @@ docker push rjar2020/postback-delivery:latest
 - PHP ingester to hit POST /postback endpoint
 - Observability
 - Kafka config improvements for HA, and start many instances of the app to make the most of it.
-- Github CI to run the tests, build and push image to Dockerhub
+- Github CD to build and push image to Dockerhub
 
 ### Log
 - In PROD, postback endpoint and postback consumer should live in separate containers. Also kafka should have its own cluster (proper backups if needed, etc)
