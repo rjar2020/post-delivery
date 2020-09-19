@@ -26,15 +26,21 @@ func (pc postbackController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			log.Printf("New postback received")
 			pb, err := pc.parseRequest(r)
 			if err != nil {
-				message := "Could not parse postback object"
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(message))
-				log.Printf(message)
+				processBadRequest(w)
 				return
 			}
 			log.Printf("Request: %#v", pb)
 			jsonData, err := json.Marshal(pb)
-			producer.Produce(string(jsonData), os.Getenv(env.KafkaPostBackTopic))
+			if err != nil {
+				processBadRequest(w)
+				return
+			}
+			err = producer.Produce(string(jsonData), os.Getenv(env.KafkaPostBackTopic))
+			if err != nil {
+				processBadRequest(w)
+				return
+			}
+			w.Write([]byte("Postback delivered"))
 			w.WriteHeader(http.StatusCreated)
 		default:
 			w.WriteHeader(http.StatusNotImplemented)
@@ -65,4 +71,11 @@ func (pc postbackController) parseRequest(r *http.Request) (model.PostBack, erro
 		return model.PostBack{}, err
 	}
 	return pb, nil
+}
+
+func processBadRequest(w http.ResponseWriter) {
+	message := "Could not parse postback object"
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte(message))
+	log.Printf(message)
 }

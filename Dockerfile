@@ -11,15 +11,15 @@ RUN apt-get -y install \
     ca-certificates \
     curl \
     gnupg-agent \
-    software-properties-common
-RUN apt-get -y install vim
-RUN apt-get -y install gcc
+    software-properties-common \
+    vim \
+    gcc \
+    default-jre
 RUN cd /home/rjar \ 
     && curl -O https://storage.googleapis.com/golang/go1.13.5.linux-amd64.tar.gz \ 
     && tar -xvf go1.13.5.linux-amd64.tar.gz \ 
     && mv go /usr/local
 RUN mv /home/rjar/resources/.profile ~/.profile
-RUN apt-get -y install default-jre
 RUN mkdir /home/rjar/kafka \
     && cd /home/rjar/kafka \
     && curl "https://downloads.apache.org/kafka/2.6.0/kafka_2.12-2.6.0.tgz" -o ./kafka.tgz \
@@ -34,8 +34,7 @@ RUN echo "tzdata tzdata/Areas select Europe" > /tmp/preseed.txt; \
     debconf-set-selections /tmp/preseed.txt && \
     apt-get update && \
     apt-get install -y tzdata
-RUN apt -y install apache2
-RUN apt -qq -y install php libapache2-mod-php
+RUN apt -y -qq install apache2 php libapache2-mod-php php-curl
 RUN mv -f /home/rjar/web/ports.conf /etc/apache2/ports.conf
 RUN mv -f /home/rjar/web/apache2.conf /etc/apache2/apache2.conf
 RUN mv -f /home/rjar/web/php/* /var/www/html
