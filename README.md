@@ -16,7 +16,7 @@ go test github.com/rjar2020/post-delivery/tests
 
 ## Running the app
 
-### Local / Dev env
+### Go and Kafka Local / Dev env
 To start post delivery system, ***from the project root*** use:
 
 - For spinning up all the dependencies (kafka platform, etc)
@@ -68,7 +68,7 @@ docker run -d -p 4000:4000 -p 8080:8080 postback-delivery
 
 Once you are here, POST localhost:4000/postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
 
-Also PHP Ingester form will be available in localhost:8080
+Also PHP Ingester form will be available in localhost:8080 and will allow to deliver postbacks to kafka.
 
 Other useful commands:
 ```bash
