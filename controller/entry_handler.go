@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+//RegisterControllers is the entrypoint of the postback API
 func RegisterControllers() {
 	pc := newPostbackController()
 
