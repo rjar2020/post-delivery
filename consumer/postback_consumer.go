@@ -56,7 +56,7 @@ func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consu
 			case kafka.PartitionEOF:
 				log.Printf("Reached %v", e)
 			case kafka.Error:
-				log.Panic("Error when reading from kafka", e)
+				log.Printf("Error when reading from kafka %v", e)
 			default:
 				log.Printf("Topic: %v - GroupId: %#v. No message during last poll %v\n", topic, groupID, e)
 			}
