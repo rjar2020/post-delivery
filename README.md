@@ -93,11 +93,11 @@ Once this is exectuted the state persisted in kafka is gone.
 
 ### to-do
 - Observability (Prometheus, Grafana, etc.)
-- Kafka config or using admin client at topic creation to include a proper replication factor. As we are starting tree (3) brokers, should be a replication factor of tree (3)
+- Kafka config or using admin client at topic creation to include a proper replication factor. As we are starting 2 brokers, should be a replication factor of 3.
 - Github CD to build and push image to Dockerhub
 
 ### Log
-- In PROD, postback endpoint and postback consumer should live in separate containers. Also kafka should have its own cluster (proper backups if needed, etc)
+- In PROD, postback endpoint and postback consumer should live in separate containers, kafka should have its own cluster (proper backups if needed, rack awareness config, etc) and instead of 8 consumers in one Pod 8 Pods with one consumer each should be started.
 - Stressing out kafka config, it needs way more work to be prod ready, but this could be done independently from the Go service/components.
 - PHP and kafka integration existing projects/modules usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
 - Also PHP tools are messy, but maybe this is just a personal opinion comming from someone trying Go tools (I really like this self-contained ecosystem) and relying on the JVM ecosystem most of the time (Yes, variety, not self-contained like Golang but with clear conventions to follow)
