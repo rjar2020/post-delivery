@@ -5,7 +5,7 @@
 - Go Tools
 
 ## CI
-If the build/test of a PR fails, it won't be allowed to be merged to master.
+If the build/test of a PR fails, it won't be allowed to be merged to master. Go to [actions] tab for info about the CI execution.
 
 ## Testing
 From your CI or the console use for executing the developer tests:
@@ -106,3 +106,4 @@ docker push rjar2020/postback-delivery:latest
 - Certs and docker images are always fun!
 
 [postman/delivery-postback.postman_collection.json]: https://github.com/rjar2020/post-delivery/blob/master/postman/delivery-postback.postman_collection.json
+[actions]: https://github.com/rjar2020/post-delivery/actions
