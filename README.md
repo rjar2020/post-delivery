@@ -16,30 +16,6 @@ go test github.com/rjar2020/post-delivery/tests
 
 ## Running the app
 
-### Go and Kafka Local / Dev env
-To start post delivery system, ***from the project root*** use:
-
-- For spinning up all the dependencies (kafka platform, etc)
-```bash
-./load-and-execute-dependencies
-```
-You can access confluentinc/cp-enterprise-control-center via http://localhost:9021/ to visualize kafka stats
-Including: topics, messages, consumer groups, etc.
-
-- For starting the app
-```bash
-go run github.com/rjar2020/post-delivery
-```
-Once you are here, POST /postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
-
-Use ***Control + c*** to stop the app
-
-- For stopping all the dependencies plus deleting related containers 
-```bash
-./stop-and-delete-dependencies
-```
-Once this is exectuted the state persisted in kafka is gone.
-
 ### Building the docker image
 To build post delivery system Ubuntu (Groovy) image, ***from the project root*** use:
 
@@ -88,6 +64,30 @@ For collaborators/mantainers, to publish the latest version of the image:
 docker tag postback-delivery:latest rjar2020/postback-delivery:latest
 docker push rjar2020/postback-delivery:latest
 ```
+
+### Go and Kafka Local / Dev env
+To start post delivery system, ***from the project root*** use:
+
+- For spinning up all the dependencies (kafka platform, etc)
+```bash
+./load-and-execute-dependencies
+```
+You can access confluentinc/cp-enterprise-control-center via http://localhost:9021/ to visualize kafka stats
+Including: topics, messages, consumer groups, etc.
+
+- For starting the app
+```bash
+go run github.com/rjar2020/post-delivery
+```
+Once you are here, POST /postback endpoint can be used to produce messages to kafka. See [postman/delivery-postback.postman_collection.json]
+
+Use ***Control + c*** to stop the app
+
+- For stopping all the dependencies plus deleting related containers 
+```bash
+./stop-and-delete-dependencies
+```
+Once this is exectuted the state persisted in kafka is gone.
 
 ## Notes
 
