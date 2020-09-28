@@ -24,6 +24,9 @@ RUN mkdir /home/rjar/kafka \
     && cd /home/rjar/kafka \
     && curl "https://downloads.apache.org/kafka/2.6.0/kafka_2.12-2.6.0.tgz" -o ./kafka.tgz \
     && tar -xvzf kafka.tgz
+ADD ./resources/broker1.properties /home/rjar/kafka/kafka_2.12-2.6.0/config/broker1.properties
+ADD ./resources/broker2.properties /home/rjar/kafka/kafka_2.12-2.6.0/config/broker2.properties
+ADD ./resources/broker3.properties /home/rjar/kafka/kafka_2.12-2.6.0/config/broker3.properties
 RUN export GOPATH=$HOME/work
 RUN export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 RUN export DEBIAN_FRONTEND=noninteractive

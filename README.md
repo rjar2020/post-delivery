@@ -5,7 +5,7 @@
 - Go Tools
 
 ## CI
-If the build/test of a PR fails, it won't be allowed to be merged to master.
+If the build/test of a PR fails, it won't be allowed to be merged to master. Go to [actions] tab for info about the CI execution.
 
 ## Testing
 From your CI or the console use for executing the developer tests:
@@ -92,13 +92,13 @@ docker push rjar2020/postback-delivery:latest
 ## Notes
 
 ### to-do
-- PHP ingester to hit POST /postback endpoint
-- Observability
-- Kafka config improvements for HA, and start many instances of the app to make the most of it.
+- Observability (Prometheus, Grafana, etc.)
+- Kafka config or using admin client at topic creation to include a proper replication factor. As we are starting tree (3) brokers, should be a replication factor of tree (3)
 - Github CD to build and push image to Dockerhub
 
 ### Log
 - In PROD, postback endpoint and postback consumer should live in separate containers. Also kafka should have its own cluster (proper backups if needed, etc)
+- Stressing out kafka config, it needs way more work to be prod ready, but this could be done independently from the Go service/components.
 - PHP and kafka integration existing projects/modules usage is not straight forward and requires a lot of infrastructure/plugins, so I decided to create a Go endpoint to facilitate this integration.
 - Also PHP tools are messy, but maybe this is just a personal opinion comming from someone trying Go tools (I really like this self-contained ecosystem) and relying on the JVM ecosystem most of the time (Yes, variety, not self-contained like Golang but with clear conventions to follow)
 - Despite I really rely on TDD to orient my design and improve speed of development, when experimenting a new tools ecosystem, I had lean to implement first. So, much likely a huge refactor it's gonna be needed in the after-match.
@@ -106,3 +106,4 @@ docker push rjar2020/postback-delivery:latest
 - Certs and docker images are always fun!
 
 [postman/delivery-postback.postman_collection.json]: https://github.com/rjar2020/post-delivery/blob/master/postman/delivery-postback.postman_collection.json
+[actions]: https://github.com/rjar2020/post-delivery/actions
