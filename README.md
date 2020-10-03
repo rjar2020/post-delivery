@@ -100,8 +100,8 @@ Once this is exectuted the state persisted in kafka is gone.
 
 - The interpretation of the project was a little flawed, we expected a simple PHP server accepting requests and pushing messages to a Kafka (or Redis) instance, and a Go application pulling from that queue and sending out requests to 3rd parties based on the original request. We allow for some interpretations but reaching out for clarity if the instructions aren't understood is the correct path.
 ```
-Actions: create a PHP controller instead of the form.
-Nice to have: try again a PHP framework/lib/component that integrates with kafka
+- Create a PHP controller instead of the form.
+- Nice to have: try again a PHP framework/lib/component that integrates with kafka locally
 ```
 - I'd expect to see the actual application(s) being started in docker-compose
 ```
