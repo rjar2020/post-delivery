@@ -111,7 +111,7 @@ Once this is exectuted the state persisted in kafka is gone.
 ```
 - There is a certificate missing to be able to run locally (./resources/my_Cert.crt)
 ```
-- Generate image out of the VPN without needing the certs (A nice to have as apparently, as according to the feedback the Ubuntu image wasn't that important)
+- Generate image out of the VPN without needing the certs (A nice to have as, according to the feedback, the Ubuntu image wasn't that important)
 ```
 
 ### Log
