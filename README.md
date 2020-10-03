@@ -112,7 +112,7 @@ Nice to have: try again a PHP framework/lib/component that integrates with kafka
 - There are a few if err != nil {} else {} statements that lead to unnecessary indentation also subscribeAndRunConsumer, always early-out with an error if you have one to clean up the code.
 ```bash
 Refactor error handling
-
+```
 - There is a certificate missing to be able to run locally (./resources/my_Cert.crt)
 ```bash
 - Generate image out of the VPN without needing the certs (A nice to have as apparently, as according to the feedback the Ubuntu image wasn't that important)
