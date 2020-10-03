@@ -96,7 +96,7 @@ Once this is exectuted the state persisted in kafka is gone.
 - Kafka config or using admin client at topic creation to include a proper replication factor. As we are starting 2 brokers, should be a replication factor of 3.
 - Github CD to build and push image to Dockerhub
 
-## to-do from code review
+### to-do from code review
 
 - The interpretation of the project was a little flawed, we expected a simple PHP server accepting requests and pushing messages to a Kafka (or Redis) instance, and a Go application pulling from that queue and sending out requests to 3rd parties based on the original request. We allow for some interpretations but reaching out for clarity if the instructions aren't understood is the correct path.
 ```bash
