@@ -16,17 +16,13 @@ func main() {
 	env.LoadEnv()
 	controller.RegisterControllers()
 	var wg sync.WaitGroup
-	wg.Add(8)
+	consumers := 8
+	wg.Add(consumers)
 	httpPort := ":" + os.Getenv(env.APIPort)
 	topic := os.Getenv(env.KafkaPostBackTopic)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
-	go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
+	for i := 0; i < consumers; i++ {
+		go consumer.StartPostBackConsumer(topic, "postback-processor", &wg)
+	}
 	http.ListenAndServe(httpPort, nil)
 	wg.Wait()
 }
