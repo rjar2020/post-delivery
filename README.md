@@ -11,7 +11,7 @@ If the build/test of a PR fails, it won't be allowed to be merged to master. Go 
 From your CI or the console use for executing the developer tests:
 
 ```bash
-go test github.com/rjar2020/post-delivery/tests
+go test github.com/rjar2020/post-delivery/service
 ```
 
 ## Running the app

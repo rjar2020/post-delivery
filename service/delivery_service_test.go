@@ -1,13 +1,11 @@
-package tests
+package service
 
 import (
 	"testing"
-
-	"github.com/rjar2020/post-delivery/service"
 )
 
 func TestDeliverPostbackGETHappyPath(t *testing.T) {
-	response, err := service.DeliverPostback("GET", "https://www.google.com")
+	response, err := DeliverPostback("GET", "https://www.google.com")
 	if err != nil {
 		t.Errorf("Error delivering postback. Method: GET - Error: %v", err)
 	} else {
@@ -16,7 +14,7 @@ func TestDeliverPostbackGETHappyPath(t *testing.T) {
 }
 
 func TestDeliverPostbackWhenInvalidHttpMethod(t *testing.T) {
-	response, err := service.DeliverPostback("BAD", "https://www.google.com")
+	response, err := DeliverPostback("BAD", "https://www.google.com")
 	if err == nil {
 		t.Errorf("It should be an error when delivering postback. Method: BAD - Response: %v", response)
 	} else {
@@ -25,7 +23,7 @@ func TestDeliverPostbackWhenInvalidHttpMethod(t *testing.T) {
 }
 
 func TestDeliverPostbackWhenNonExistentSite(t *testing.T) {
-	response, err := service.DeliverPostback("GET", "https://www.googlemeami.com")
+	response, err := DeliverPostback("GET", "https://www.googlemeami.com")
 	if err == nil {
 		t.Errorf("It should be an error when delivering postback. Method: BAD - Response: %v", response)
 	} else {
@@ -34,7 +32,7 @@ func TestDeliverPostbackWhenNonExistentSite(t *testing.T) {
 }
 
 func TestDeliverPostbackPOSTHappyPath(t *testing.T) {
-	response, err := service.DeliverPostback("POST", "https://www.google.com")
+	response, err := DeliverPostback("POST", "https://www.google.com")
 	if err != nil {
 		t.Errorf("Error delivering postback. Method: POST - Error: %v", err)
 	} else {
