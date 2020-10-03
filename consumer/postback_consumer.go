@@ -46,25 +46,26 @@ func createConsumer(groupID string) (*kafka.Consumer, error) {
 
 func subscribeAndRunConsumer(topic string, groupID string, consumer *kafka.Consumer) error {
 	err := consumer.SubscribeTopics([]string{topic}, nil)
-	if err == nil {
-		for true {
-			ev := consumer.Poll(TwoSeconds)
-			switch e := ev.(type) {
-			case *kafka.Message:
-				log.Printf("Message on %s: %s",
-					e.TopicPartition, string(e.Value))
-				processPostBack(e)
-			case kafka.PartitionEOF:
-				log.Printf("Reached %v", e)
-			case kafka.Error:
-				log.Printf("Error when reading from kafka %v", e)
-			default:
-				log.Printf("Topic: %v - GroupId: %#v. No message during last poll %v\n", topic, groupID, e)
-			}
-		}
-	} else {
+	if err != nil {
 		log.Printf("Error subscribing to topics: %v", topic)
+		return err
 	}
+
+	for true {
+		ev := consumer.Poll(TwoSeconds)
+		switch e := ev.(type) {
+		case *kafka.Message:
+			log.Printf("Message on %s: %s", e.TopicPartition, string(e.Value))
+			processPostBack(e)
+		case kafka.PartitionEOF:
+			log.Printf("Reached %v", e)
+		case kafka.Error:
+			log.Printf("Error when reading from kafka %v", e)
+		default:
+			log.Printf("Topic: %v - GroupId: %#v. No message during last poll %v\n", topic, groupID, e)
+		}
+	}
+
 	return err
 }
 
@@ -72,13 +73,14 @@ func processPostBack(message *kafka.Message) {
 	postBack, err := model.FromJSONtoPostback(message.Value)
 	if err != nil {
 		log.Printf("Error decoding kafka message: %s", err)
-	} else {
-		log.Printf("Decoded message on %s: %#v", message.TopicPartition, postBack)
-		url := service.ToURL(postBack)
-		_, err = service.DeliverPostback(postBack.Endpoint.Method, url)
-		if err != nil {
-			log.Printf("Error when processing postback. Sending it to dead letter topic: %v", err)
-			producer.Produce(string(message.Value), os.Getenv(env.KafkaDeadPostBackTopic))
-		}
+		return
+	}
+
+	log.Printf("Decoded message on %s: %#v", message.TopicPartition, postBack)
+	url := service.ToURL(postBack)
+	_, err = service.DeliverPostback(postBack.Endpoint.Method, url)
+	if err != nil {
+		log.Printf("Error when processing postback. Sending it to dead letter topic: %v", err)
+		producer.Produce(string(message.Value), os.Getenv(env.KafkaDeadPostBackTopic))
 	}
 }

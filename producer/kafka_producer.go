@@ -17,7 +17,7 @@ func Produce(message string, topic string) error {
 	if err != nil {
 		log.Printf("Failed to create producer: %s\n", err)
 	} else {
-		produceToTopic(p, message, topic)
+		err = produceToTopic(p, message, topic)
 	}
 	return err
 }
@@ -29,17 +29,18 @@ func produceToTopic(producer *kafka.Producer, message string, topic string) erro
 		Value:          []byte(message)},
 		deliveryChan,
 	)
-
+	if err != nil {
+		log.Printf("Delivery failed: %v\n", err)
+		return err
+	}
 	e := <-deliveryChan
 	m := e.(*kafka.Message)
-
 	if m.TopicPartition.Error != nil {
 		log.Printf("Delivery failed: %v\n", m.TopicPartition.Error)
 	} else {
 		log.Printf("Delivered message to topic %s [%d] at offset %v\n",
 			*m.TopicPartition.Topic, m.TopicPartition.Partition, m.TopicPartition.Offset)
 	}
-
 	close(deliveryChan)
-	return err
+	return m.TopicPartition.Error
 }

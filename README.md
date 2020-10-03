@@ -109,10 +109,6 @@ Once this is exectuted the state persisted in kafka is gone.
 - Include slim dockerfile for local PHP related components and start it in docker compose along the other infra components.
 - Nice to have: multiple kafka brokers in local docker compose
 ```
-- There are a few if err != nil {} else {} statements that lead to unnecessary indentation also subscribeAndRunConsumer, always early-out with an error if you have one to clean up the code.
-```
-- Refactor error handling
-```
 - There is a certificate missing to be able to run locally (./resources/my_Cert.crt)
 ```
 - Generate image out of the VPN without needing the certs (A nice to have as apparently, as according to the feedback the Ubuntu image wasn't that important)
