@@ -96,6 +96,28 @@ Once this is exectuted the state persisted in kafka is gone.
 - Kafka config or using admin client at topic creation to include a proper replication factor. As we are starting 2 brokers, should be a replication factor of 3.
 - Github CD to build and push image to Dockerhub
 
+## to-do from code review
+
+- The interpretation of the project was a little flawed, we expected a simple PHP server accepting requests and pushing messages to a Kafka (or Redis) instance, and a Go application pulling from that queue and sending out requests to 3rd parties based on the original request. We allow for some interpretations but reaching out for clarity if the instructions aren't understood is the correct path.
+```bash
+Actions: create a PHP controller instead of the form.
+Nice to have: try again a PHP framework/lib/component that integrates with kafka
+```
+- I'd expect to see the actual application(s) being started in docker-compose
+```bash
+- Include slim dockerfile for local go related components and start it in docker compose along the other infra components.
+- Include slim dockerfile for local PHP related components and start it in docker compose along the other infra components.
+- Nice to have: multiple kafka brokers in local docker compose
+```
+- There are a few if err != nil {} else {} statements that lead to unnecessary indentation also subscribeAndRunConsumer, always early-out with an error if you have one to clean up the code.
+```bash
+Refactor error handling
+
+- There is a certificate missing to be able to run locally (./resources/my_Cert.crt)
+```bash
+- Generate image out of the VPN without needing the certs (A nice to have as apparently, as according to the feedback the Ubuntu image wasn't that important)
+```
+
 ### Log
 - In PROD, postback endpoint and postback consumer should live in separate containers, kafka should have its own cluster (proper backups if needed, rack awareness config, etc) and instead of 8 consumers in one Pod 8 Pods with one consumer each should be started.
 - Stressing out kafka config, it needs way more work to be prod ready, but this could be done independently from the Go service/components.

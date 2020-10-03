@@ -15,6 +15,7 @@ import (
 )
 
 //I know this is not needed, I just wanted to try iota
+//Besides, this is not prod code, is just a test and this is a Golang feature to try and showcase.
 const (
 	//OneSecond for kafka consumer polling
 	OneSecond = (iota + 1) * 1000
