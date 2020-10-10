@@ -98,21 +98,12 @@ Once this is exectuted the state persisted in kafka is gone.
 
 ### to-do from code review
 
-- The interpretation of the project was a little flawed, we expected a simple PHP server accepting requests and pushing messages to a Kafka (or Redis) instance, and a Go application pulling from that queue and sending out requests to 3rd parties based on the original request. We allow for some interpretations but reaching out for clarity if the instructions aren't understood is the correct path.
-```
 - Create a PHP controller instead of the form.
 - Nice to have: try again a PHP framework/lib/component that integrates with kafka locally
-```
-- I'd expect to see the actual application(s) being started in docker-compose
-```
 - Include slim dockerfile for local go related components and start it in docker compose along the other infra components.
 - Include slim dockerfile for local PHP related components and start it in docker compose along the other infra components.
 - Nice to have: multiple kafka brokers in local docker compose
-```
-- There is a certificate missing to be able to run locally (./resources/my_Cert.crt)
-```
-- Generate image out of the VPN without needing the certs (A nice to have as, according to the feedback, the Ubuntu image wasn't that important)
-```
+- Including valid certificates (crt files) for generating the ubuntu image in this repo (A nice to have as, according to the feedback, the Ubuntu image wasn't that important)
 
 ### Log
 - In PROD, postback endpoint and postback consumer should live in separate containers, kafka should have its own cluster (proper backups if needed, rack awareness config, etc) and instead of 8 consumers in one Pod 8 Pods with one consumer each should be started.
