@@ -1,5 +1,8 @@
 # post-delivey system
 
+## Disclaimer
+This isn't idiomatic, elegant and in no way a production ready solution. The intention was to solve a real life problem in Go learning on the fly, meaning I didn't take any formal training before crafting this project.
+
 ## Prerequisites (besides Git, of course)
 - Docker Desktop or any Docker compatible app/manager
 - Go Tools
